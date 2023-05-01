@@ -1,0 +1,110 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 27, 2021, 10:16:09 AM
+    Author     : hari-work
+*/
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: 20px auto;
+    line-height: 1.6em;
+    /*width: 80%;*/
+    background-color: lightgreen;
+    /*background-image: url("../web/images/qb-logo-stacked.svg");*/
+    background-size: cover;
+}
+
+
+
+table, th, td {
+    border:1px solid;
+    border-collapse: collapse;
+    /*border: none;*/
+    width: 50%;
+    table-layout: fixed;
+}
+th, td {
+    padding: 5px;
+    text-align: center;
+    word-wrap: break-word;
+}
+th {
+    text-decoration: underline;
+}
+
+form, input {
+    text-align: right;
+    padding-right: 50px;
+}
+
+.buyerForm {
+    text-align: left;
+    padding-right: 20px;
+}
+
+.itemForm {
+    text-align: left;
+    padding-right: 20px;
+}
+
+.bRow, .bData, .bTable{
+    border:1px solid; text-align:center;    
+}
+
+.bTable{
+    border-collapse: collapse; 
+    padding: 8px;
+    width: 60%;
+    text-align: left;
+    /*table-layout: auto;*/
+}
+
+.nbTable{
+    border: none; 
+    padding: 8px;
+    width: 60%;
+    text-align: left;
+    table-layout: auto;
+}
+
+.TopMenu {
+    border:none;
+    width: 15%;
+    table-layout: fixed;
+}
+
+hr.solid {
+    border-top: 3px solid black;
+}
+
+
+.Login {
+    text-align: center;
+    padding:20px;
+    border: 2px solid black;
+}
+
+.disable{
+    pointer-events:none;
+    background:lightgray;
+}
+
+button{
+    background-color: aquamarine;
+    border-radius: 12px;
+}
+button:hover{opacity: 0.5}
+
+
+/*
+#MainHeader {
+    height: 10px;
+    background: #aaa;
+    text-align: center;
+}*/

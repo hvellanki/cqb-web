@@ -1,0 +1,11 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@page import="java.util.*" %>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/cqb.css">        
+    </head>
+    <body>
+        <h1 align="center"><span style="background-color: #d5f4e6;">Bill360 Seller Portal</span></h1>
+        <h2 class="SecondaryHeader" align="center"> <%= session.getAttribute("SupplierName")%> </h2>
