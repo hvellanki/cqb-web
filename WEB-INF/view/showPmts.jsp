@@ -28,7 +28,7 @@
         <th>Payment Status</th>
         <th>Invoice Status</th>
         <th>Total Amount</th>
-       
+
     </tr>
 
     <% for (int i = 0; i < pmtList.size(); i++) {
@@ -37,15 +37,15 @@
         <td><%= pmt.getPmtId()%></td> 
         <td><%= pmt.getPmtRefNum()%></td>
         <td><%= pmt.getBuyerName()%></td>
-     
+
         <td><%= pmt.getLinkedTxId()%></td>
         <td><%= pmt.getLinkedTxType()%></td>
         <td><%= pmt.getPmtDate()%></td>
-        
-        <td>APPROVED</td>
-           <td><%= BuyerSvc.getInvoiceStatus(pmt.getSupplierId(), pmt.getLinkedTxId())%></td>
+
+        <td><%= pmt.getStatus()%></td>
+        <td><%= BuyerSvc.getInvoiceStatus(pmt.getSupplierId(), pmt.getLinkedTxId())%></td>
         <td><%= pmt.getTotalAmount()%></td>
-       
+
         <td>
             <button type="button" onclick="location.assign('displayJson?EntityName=Payment&EntityId=<%=pmt.getPmtId()%>&time=<%=java.time.Instant.now().getEpochSecond()%>')">Display Json</button>
         </td>

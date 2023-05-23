@@ -14,7 +14,7 @@
     <button type="button" onclick="window.location.href = 'syncData?dataType=invoices&time=<%=java.time.Instant.now().getEpochSecond()%>'">Sync Data</button>
 </p>
 
-    
+
 <% List infoList = (List) request.getAttribute("BuyersInvoicesInfo");
 %>
 

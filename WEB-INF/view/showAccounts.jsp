@@ -30,11 +30,11 @@
     <tr>
         <td><%= acct.getAccountId()%></td> 
         <td colspan="2" style="width:100%"><%= acct.getAccountName()%></td>
-    
+
         <td><%= acct.getAccountType()%></td>
-       
+
         <td><%= acct.getBalance()%></td>
-       
+
         <td><%= acct.getUpdatedDate()%></td>
         <td>
             <button type="button" onclick="location.assign('displayJson?EntityName=Account&EntityId=<%=acct.getAccountId()%>&time=<%=java.time.Instant.now().getEpochSecond()%>')">Display Json</button>

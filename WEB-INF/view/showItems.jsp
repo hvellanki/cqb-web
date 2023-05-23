@@ -22,9 +22,9 @@
         <th>Description</th>
 
         <th>Item Type</th>
-   
+
         <th>Income Account</th>
-   
+
         <th>Unit Price</th>
         <th>Taxable</th>
     </tr>
@@ -35,11 +35,11 @@
         <td><%= item.getItemId()%></td> 
         <td><%= item.getName()%></td>
         <td><%= item.getDescription()%></td>
-     
+
         <td><%= item.getType()%></td>
-      
+
         <td><%= item.getIncomeAccount()%></td>
-      
+
         <td><%= item.getUnitPrice()%></td>
         <td><%= item.getTaxable()%></td>
         <td>

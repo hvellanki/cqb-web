@@ -1,4 +1,4 @@
-h<%-- 
+<%-- 
     Document   : createInvoice
     Created on : Jul 6, 2021, 8:11:29 PM
     Author     : hari-work
@@ -29,6 +29,9 @@ h<%--
                 width: 160px;
                 text-align: right;
             }​
+            label-buyer{
+                text-align: left;
+            }
         </style>
         <script src="scripts/jquery-3.6.0.js""></script>
     </head>
@@ -52,7 +55,7 @@ h<%--
         <% for (int i = 0; i < buyersList.size(); i++) {
                 Buyer buyer = (Buyer) buyersList.get(i);%>
         jBuyers[<%=i%>] = {Id: "<%=buyer.getBuyerId()%>", Name: "<%=buyer.getCustomerName()%>", Email: "<%=buyer.getEmailAddress()%>",
-            Address: "<%=buyer.getBillAddress()%>"};
+            Address: "<%=buyer.getBillAddress()%>", TaxRate: "<%=buyer.getTaxRate()%>", RateDetail: "<%=buyer.getRateDetail()%>"};
         <%}%>
         var jItems = [];
         <% for (int i = 0; i < itemsList.size(); i++) {
@@ -64,6 +67,8 @@ h<%--
     </script>
 
     <script>
+
+        //   var isSubmitted = false;
         function getDueDate(Days) {
             var ms = new Date().getTime() + Days * 86400000;
             var D = new Date(ms);
@@ -73,6 +78,7 @@ h<%--
             return DueD;
         }
         $(document).ready(function () {
+
             $("#Email").val(jBuyers[0].Email);
             $("#Address").val(jBuyers[0].Address);
             $("#TaxRate").val(jBuyers[0].TaxRate);
@@ -96,13 +102,18 @@ h<%--
 
             var LineNum = 1;
 
+
             $("select.SelectItem").change(function () {
                 var index = $(this).prop('selectedIndex');
                 var CurrentRow = $(this).parent();
                 CurrentRow.siblings(".Description").text(jItems[index].Description);
                 var RateElem = CurrentRow.siblings(".Rate").children();
                 var QtyElem = CurrentRow.siblings("td.Qty").children();
+                var TaxableElem = CurrentRow.siblings(".Taxable").children();
+                var RateIdElem = CurrentRow.siblings(".RateId").children();
                 $(RateElem).val(jItems[index].Rate);
+                $(TaxableElem).val(jItems[index].Taxable);
+                $(RateIdElem).val(jItems[index].TaxRateId);
                 $(QtyElem).val(1);
                 var AmountElem = CurrentRow.siblings(".Amount").children();
                 $(AmountElem).val($(QtyElem).val() * $(RateElem).val());
@@ -119,13 +130,13 @@ h<%--
                 setAmounts();
             });
             $("input.Rate").change(function () {
-             var CurrentRow = $(this).parent();
-             var QtyVal = CurrentRow.siblings("td.Qty").children().val();
-             var RateVal = $(this).val();
-             var AmountElem = CurrentRow.siblings("td.Amount").children();
-             $(AmountElem).val(QtyVal * RateVal);
-             setAmounts();
-             });
+                var CurrentRow = $(this).parent();
+                var QtyVal = CurrentRow.siblings("td.Qty").children().val();
+                var RateVal = $(this).val();
+                var AmountElem = CurrentRow.siblings("td.Amount").children();
+                $(AmountElem).val(QtyVal * RateVal);
+                setAmounts();
+            });
             $(".add").click(function () {
                 var rows = $(".iData");
                 var newRow = rows.first().clone(true, true);
@@ -138,16 +149,17 @@ h<%--
 
             /*$("#TaxRate").change(function () {
              setTaxedAmounts();
+             });
+             
+             $("#DiscountPercent").change(function () {
+             setTaxedAmounts();
              });*/
 
-            $("#DiscountPercent").change(function () {
-                setTaxedAmounts();
-            });
 
-            
             $("form").submit(function () {
 
                 var this_master = $(this);
+                //isSubmitted = true;
 
                 this_master.find('input[type="checkbox"]').each(function () {
                     var checkbox_this = $(this);
@@ -161,6 +173,7 @@ h<%--
                     }
                 });
             });
+
 
 
         });
@@ -187,6 +200,7 @@ h<%--
                 var CurrentRow = $(this).parent();
                 var TaxableElement = CurrentRow.siblings("td.Taxable").children();
                 if (TaxableElement.prop("checked")) {
+                    //if(TaxableElement.attr('value') ==="Tax"){
                     TaxableSubTotal += Number($(this).val());
                 }
             });
@@ -194,14 +208,9 @@ h<%--
         }
         function setTaxedAmounts() {
             var TaxableSubTotal = getTaxableSubTotal();
-           /* var Discount = $("#SubTotal").val() * ($("#DiscountPercent").val() / 100); //).toFixed(2);;
-            Discount = Number(Discount).toFixed(2);
-            $("#Discount").val(Discount);
+            //console.log("setAmounts:isS :" + isSubmitted);
 
-            var TaxableItemsDiscount = TaxableSubTotal * ($("#DiscountPercent").val() / 100);
-            var TaxableAmount = TaxableSubTotal - TaxableItemsDiscount;*/
-        
-        var TaxableAmount = TaxableSubTotal;
+            var TaxableAmount = TaxableSubTotal;
 
             var Tax = 0.00;
             if (TaxableAmount > 0) {
@@ -213,10 +222,10 @@ h<%--
             $("#TaxableAmount").val(TaxableAmount);
 
             //var Total = +1 * $("#SubTotal").val() - 1 * $("#Discount").val() + 1 * Tax ;
-            var Total = +1 * $("#SubTotal").val()  + 1 * Tax ;
+            var Total = +1 * $("#SubTotal").val() + 1 * Tax;
             Total = Number(Total).toFixed(2);
             $("#Total").val(Total);
-            $("#Balance").val($("#Total").val());
+
 
 
         }
@@ -227,32 +236,32 @@ h<%--
     <form method="POST" id="SaveInvoice" action="<%=HostName%>/saveInvoice"  style="text-align:left; border:none"> 
         <table class="nbTable">
             <tr class="nbTable">
-                <td class="nbTable"> <label for="Buyers">Buyer:</label>
+                <td class="nbTable label-buyer"> <label style="text-align:left" for="Buyers">Buyer:</label>
                     <select id="Buyers" name="BuyerId">
                         <% for (int i = 0; i < buyersList.size(); i++) {
                                 Buyer buyer = (Buyer) buyersList.get(i);%>
 
-                        <option  value="<%=buyer.getBuyerId()%>"><%=buyer.getContactName()%> </option>
+                        <option  value="<%=buyer.getBuyerId()%>"><%=buyer.getCustomerName()%> </option>
                         <%}%>
                     </select>
                 </td>
-                <td class="nbTable"><label for="Email">Buyer Email:</label>
+                <td class="nbTable"><label style="text-align:left" for="Email">Buyer Email:</label>
                     <input class="buyerForm disable" type="Email" id="Email" name="Email" required>
                 </td>
             </tr>
-            <tr class="nbTable"><td class="nbTable"><label for="Address">Buyer Address:</label><br>
+            <tr class="nbTable"><td class="nbTable"><label style="text-align:left" for="Address">Buyer Address:</label><br>
                     <textarea id="Address" class="disable" name="address" rows="4" cols="20" align="left"></textarea>
                 </td>
-                <td class="nbTable"><label for="Terms">Terms:</label><br>               
+                <td class="nbTable"><label style="text-align:left" for="Terms">Terms:</label><br>               
                     <select class="buyerForm" id="Terms" type="text" name="Terms" >
                         <option value="30">Net 30</option>
                         <option value="15">Net 15</option>
                     </select>
                 </td>
-                <td class="nbTable"><label for="InvoiceDate">Invoice Date:</label><br>
+                <td class="nbTable"><label style="text-align:left" for="InvoiceDate">Invoice Date:</label><br>
                     <input class="buyerForm disable" type="text" id="InvoiceDate" name="InvoiceDate" align="left" value="<%=SvcUtil.getCurrentDate()%>">                
                 </td>
-                <td class="nbTable"><label for="DueDate">Due Date:</label><br>
+                <td class="nbTable"><label style="text-align:left" for="DueDate">Due Date:</label><br>
                     <input class="buyerForm disable" type="text" id="DueDate" name="DueDate" align="left"  required>
                 </td>
             </tr>
@@ -285,7 +294,10 @@ h<%--
                 <td  class="Qty bData"><input class="itemForm Qty" type="number"   name="Qty" size="5" required></td>
                 <td  class="Rate bData"><input class="itemForm Rate" type="number"  name="Rate" size="5" required></td>
                 <td  class="Amount bData"><input class="itemForm Amount disable" type="number" name="Amount" size="10" required></td>
-                <td  class="Taxable bData"><input class="itemForm Taxable" checked type="checkbox" name="Taxable" onchange="setAmounts()" value="Tax"></td>
+                <!--td  class="Taxable bData"><input style="text-align: center;"class=" itemForm Taxable disable"  name="Taxable"></td>
+                <td  class="RateId bData" hidden><input class="itemForm RateId"  name="TaxRateId"  hidden></td-->
+                <td  class="Taxable bData"><input class="itemForm Taxable" checked type="checkbox" name="Taxable" onclick="setAmounts()" value="Tax"></td-->
+
             </tr>  
         </table>
 
@@ -297,14 +309,7 @@ h<%--
                 <td colspan="2" class="amounts" style="text-align: right; border:none"><label for="SubTotal">SubTotal&nbsp;&nbsp;&nbsp;&nbsp;  :</label>
                     <input  class="disable amounts" style="text-align: left; border:none; padding-right: 20px;" size="10" type="text" id="SubTotal" value="0.0" name="SubTotal">
             </tr>
-            <!--tr class="amounts" style="text-align: right; border:none">
-                <td colspan="2" class="amounts" style="text-align: right; border:none"><label for="DiscountPercent">DiscountPercent&nbsp;&nbsp;&nbsp;&nbsp;  :</label>
-                    <input   style="text-align: left; border:none; padding-right: 20px;" size="10" type="text" id="DiscountPercent" value="0.0" name="DiscountPercent">
-            </tr> 
-            <tr class="amounts" style="text-align: right; border:none">
-                <td colspan="2"class="amounts" style="text-align: right; border:none"><label for="Discount">Discount&nbsp;&nbsp;&nbsp;&nbsp;  :</label>
-                    <input  class="disable amounts" style="text-align: left; border:none; padding-right: 20px;" size="10" type="text" id="Discount" value="0.00" name="Discount" >
-            </tr-->
+
             <tr class="amounts" style="text-align: right; border:none">
                 <td colspan="2" style="text-align: right; border:none"><label for="TaxableAmount">TaxableAmount&nbsp;&nbsp;&nbsp;&nbsp;  :</label>
                     <input  class="disable amounts" style="text-align: left; border:none; padding-right: 20px;" size="10" type="text" id="TaxableAmount" value="0.00" name="TaxableAmount" >
@@ -318,7 +323,7 @@ h<%--
                 <td colspan="2" class="amounts" style="text-align: right; border:none"><label for="Tax">Tax&nbsp;&nbsp;&nbsp;&nbsp;  :</label>
                     <input class="disable amounts" style="text-align: left; border:none; padding-right: 20px;" size="10" type="text" id="Tax" name="Tax" value="0.00">
             </tr>
-          
+
             <tr>
                 <td colspan="2" class="amounts" style="text-align: right; border:none"><label for="Total">Total&nbsp;&nbsp;&nbsp;&nbsp;  :</label>
                     <input class="disable amounts" style="text-align: left; border:none; padding-right: 20px;" size="10" type="text" id="Total" value="0.00" name="Total" required> 
@@ -329,9 +334,7 @@ h<%--
                 <td class="amounts" style="text-align: right; border:none">
                     <button align="right" name="Action" value="Save" type="Submit" onclick="Disabled = true">Save</button>
                 </td>
-                <!--td class="amounts" style="text-align: right; border:none">
-                    <button align="right" name="Action" value="SaveSend" type="Submit" onclick="Disabled = true">Save and Send</button>
-                </td-->
+
             </tr>
 
         </table>
@@ -340,16 +343,6 @@ h<%--
         <br>
 
 
-        <!--table style="text-align: right; table-layout: auto; border:none; padding-top: 600px; padding-right: 10px;">
-            <tr style="text-align: right; border:none">
-                <td style="text-align: right; border:none">
-                    <button align="right" name="Action" value="Save" type="Submit" onclick="Disabled = true">Save</button>
-                </td>
-                <td style="text-align: right; border:none">
-                    <button align="right" name="Action" value="SaveSend" type="Submit" onclick="Disabled = true">Save and Send</button>
-                </td>
-            </tr>
-        </table-->
     </form>
 
 

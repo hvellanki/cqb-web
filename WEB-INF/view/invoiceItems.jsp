@@ -37,6 +37,7 @@
         <script src="scripts/jquery-3.6.0.js"></script>
     </head>
     <body>
+        <div style="text-align:right; float:right""><a href="logout" style="padding: 16px" >logout</a></div>
         <h1 align="center"><span style="background-color: #d5f4e6;">Bill360</span></h1>
         <h2 class="SecondaryHeader" align="center"> <%= session.getAttribute("SupplierName")%> </h2>
 
@@ -73,7 +74,7 @@
 
         <table align="center" style="border:1px solid;  border-collapse: collapse; text-align:left;  width: 65%;">
             <tr>
-            
+
                 <th style="border:1px solid; text-align:left;">Item#</th>
                 <th style="border:1px solid; text-align:left;">Name</th>
                 <th style="border:1px solid; text-align:left;">Description</th>
@@ -107,9 +108,9 @@
                 var TaxableSubTotal = $("#TaxableSubTotal").val();
                 if (document.getElementById(cboxId).checked) {
                     var SubTotal = Number(1 * $("#SubTotal").val() + itemTotal).toFixed(2);
-                    var Discount = Number(1 * $("#Discount").val() + itemDiscount).toFixed(2);
+
                     $("#SubTotal").val(SubTotal);
-                    $("#Discount").val(Discount);
+
 
                     if (itemTax > 0) { // taxable                    
                         TaxableSubTotal = Number(1 * TaxableSubTotal + itemTaxableTotal).toFixed(2);
@@ -126,8 +127,7 @@
                     $("#SubTotal").val(SubTotal);
                     //var Tax = Number(1 * $("#Tax").val() - itemTax).toFixed(2);
                     //$("#Tax").val(Tax);
-                    var Discount = Number(1 * $("#Discount").val() - itemDiscount).toFixed(2);
-                    $("#Discount").val(Discount);
+
                     if (itemTax > 0) { // taxable                    
                         TaxableSubTotal = Number(1 * TaxableSubTotal - itemTaxableTotal).toFixed(2);
                         $("#TaxableSubTotal").val(TaxableSubTotal);
@@ -145,7 +145,7 @@
                 $("#Total").val(Total);
             }
 
-         
+
 
             function disableLineItemId(LineItemId, i) {
                 LineItemId.disabled = true;
@@ -177,21 +177,19 @@
         <br><br>
         <div style="float:right">
             <form method="POST" id="paymentForm" class="paymentForm" action="receivePayment?InvoiceId=<%=invoiceObj.getInvoiceId()%>">
-                <label for="SubTotal" style="padding-left: 100px;">SubTotal(before tax and discount):&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <label for="SubTotal" style="padding-left: 100px;">SubTotal(before tax):&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="text" id="SubTotal" class="disable amount"  name="SubTotal" value="<%=invoiceObj.getSubTotal()%>"> <br>
-                <label for="Discount" style="padding-left: 100px;">Discount (<%=invoiceObj.getDiscountAmount()%>%):&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="text" id="Discount" class="disable  amount"  name="Discount" value="<%=invoiceObj.getDiscountAmount()%>"> <br>
-                
-                <label for="TaxableSubTotal" style="padding-left: 100px;">Taxable SubTotal:&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="text" id="TaxableSubTotal" class="disable  amount"  name="TaxableSubTotal" value="<%=invoiceObj.getSubTotal()%>"> <br>
-                
-         
+
+                <!--label for="TaxableSubTotal" style="padding-left: 100px;">Taxable SubTotal:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" id="TaxableSubTotal" class="disable  amount"  name="TaxableSubTotal" value="<%=invoiceObj.getSubTotal()%>"> <br-->
+
+
                 <label for="TaxRate" style="padding-left: 100px;">Tax Rate:&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="text" id="Tax" class="disable  amount"  name="TaxRate" value="<%=invoiceObj.getTaxRate()%>"> <br>
-                
+
                 <label for="Tax" style="padding-left: 100px;">Tax:&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="text" id="Tax" class="disable  amount"  name="Tax" value="<%=invoiceObj.getTax()%>"> <br>
-               
+
                 <label for="Total" style="padding-left: 100px;">Total:&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="text" id="Total" class="disable  amount"   name="Amount" value="<%=invoiceObj.getTotalAmt()%>"> <br>
                 <label for="AmountRcvd" style="padding-left: 100px;">Amount Received:&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -201,13 +199,13 @@
                 <hr style="width:75%;height:2px;border-width:0;color:gray;background-color:gray;text-align:right;margin-right:0">
                 <label for="Balance" style="padding-left: 100px;">Balance Due:&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="text" id="Balance" class="disable  amount"  name="Balance" value="<%=invoiceObj.getAmtDue()%>"> <br><br>
-                
+
                 <button type="submit" align="left" style="margin-left:0px;margin-right:0px; text-align: left" onclick="return confirmSubmit()" formaction="issueCredit?InvoiceId=<%=invoiceObj.getInvoiceId()%>">Issue Credit</button>
                 <button type="submit" align="left" style="margin-left:10px;margin-right:0px; text-align: left" onclick="Disabled = true" >Receive Payment</button>
 
             </form>
-                
-                 
+
+
 
             <!--form style="border:none; margin-right: 0px;" class="sendForm" method="POST" action="sendInvoice?InvoiceId=<%=invoiceObj.getInvoiceId()%>">
 
@@ -215,19 +213,17 @@
 
             </form-->
         </div>
-            
-            <label for="MsgOnInvoice" style="padding-left: 0px;">Message on Invoice:</label><br>
+
+        <label for="MsgOnInvoice" style="padding-left: 0px;">Message on Invoice:</label><br>
         <div id="MsgOnInvoice" style="margin-left: 300px; width:300px;  height:60px;  text-align: left; border-style:solid; overflow:auto" ><%=invoiceObj.getPrivateNote()%></div>
         <br>
-        
+
         <br><br>
         <button type="button" onclick="location.assign('buyerInvoices?BuyerId=<%=invoiceObj.getBuyerId()%>&time=<%=java.time.Instant.now().getEpochSecond()%>')">Back</button>
         <button type="buton" onclick="location.assign('sendInvoice?BuyerId=<%=invoiceObj.getBuyerId()%>')">Send Invoice</button>
         <button type="button" onclick="location.assign('displayJson?EntityName=Invoice&EntityId=<%=invoiceObj.getInvoiceId()%>&time=<%=java.time.Instant.now().getEpochSecond()%>')">Display Json</button>
 
     </div>
-    <br><br><br>
-    <div style="text-align:right"><a href="logout" style="padding: 16px; margin-top:100px" >logout</a></div>
 </body>
 
 </html>

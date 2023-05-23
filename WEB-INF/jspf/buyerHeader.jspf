@@ -9,4 +9,4 @@
     <body>
         <h1 align="center"><span style="background-color: #d5f4e6;">Bill360 Buyer Portal</span></h1>
         <h2 class="SecondaryHeader" align="center"> <%= session.getAttribute("SupplierName")%> </h2>
-          <h2 class="SecondaryHeader" align="center"> <%= session.getAttribute("BuyerName")%> </h2>
+        <h2 class="SecondaryHeader" align="center"> <%= session.getAttribute("BuyerName")%> </h2>

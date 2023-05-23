@@ -1,6 +1,6 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<div style="text-align:right"><a href="logout" style="padding: 16px" >logout</a></div>
+
 </body>
 
 </html>

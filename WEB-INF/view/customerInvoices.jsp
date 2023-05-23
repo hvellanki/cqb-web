@@ -24,7 +24,7 @@
             <th>Due date</th>
             <th>Past Due</th>
             <th>Balance</th>
-          
+
         </tr>
 
         <% for (int i = 0; i < infoList.size(); i++) {
@@ -37,7 +37,7 @@
             <td><%= info.DueDate%></td>
             <td><%= info.DaysPastDue%></td>
             <td><%= info.Balance%></td>
-            
+
         </tr>
         <% }%>
 

@@ -24,13 +24,13 @@
         <th>Balance</th>
         <th>Payment Date</th>
         <th>Invoice Status</th>
-       
+
     </tr>
 
     <% for (int i = 0; i < infoList.size(); i++) {
                 InvoiceInfo info = (InvoiceInfo) infoList.get(i);%>
     <tr>
-       
+
         <td><%= info.InvoiceNumber%></td>
         <td><a href="invoiceItems?InvoiceId=<%=info.InvoiceId%>&time=<%=java.time.Instant.now().getEpochSecond()%>">
                 <%= info.InvoiceId%></a></td>
@@ -40,7 +40,7 @@
         <td><%= info.Balance%></td>
         <td><%= info.PmtDate%></td>
         <td><%= info.Status%></td>
-      
+
 
     </tr>
     <% }%>

@@ -1,0 +1,18 @@
+<%-- 
+    Document   : backOffice
+    Created on : May 13, 2023, 8:40:20 AM
+    Author     : hari-work
+--%>
+
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@page import="java.util.*" %>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/cqb.css">        
+    </head>
+    <body style="background-color:lightgrey">
+
+        <h1 align="center"><span style="background-color:darkcyan">Bill360 Back Office</span></h1>
+

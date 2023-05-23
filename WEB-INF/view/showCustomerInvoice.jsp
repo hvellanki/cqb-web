@@ -93,7 +93,7 @@
     <% for (int i = 0; i < itemsList.size(); i++) {
             LineItem lineItem = (LineItem) itemsList.get(i);%>
     <tr>
-     
+
         <td style="border:1px solid; text-align:left;"><%=i + 1%></td>
         <td style="border:1px solid; text-align:left;"><%= lineItem.getDescription()%></td>
         <td style="border:1px solid; text-align:left;"><%= lineItem.getQuantity()%></td>

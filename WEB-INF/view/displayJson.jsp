@@ -71,7 +71,7 @@
 
         <table> <tr>
                 <td>
-                    <div class="container" id="JsonText"  style="margin-left: 300px; width:400px;  height:800px;  text-align: left; border-style:solid; overflow:auto; overflow-break:normal" >
+                    <div class="container" id="JsonText"  style="margin-left: 300px; width:375px;  height:800px;  text-align: left; border-style:solid; overflow:auto; overflow-break:normal" >
                         <%=repObj.getJsonValue()%></div>
 
                 </td>          

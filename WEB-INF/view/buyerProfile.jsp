@@ -31,7 +31,8 @@
             }​
         </style>
     </head>
-    <h1 align="center"><span style="background-color: #d5f4e6;">Bill360</span></h1>
+    <div style="text-align:right;"><a href="logout" style="padding: 16px" >logout</a></div>
+    <h1 align="center"><span style="background-color: #d5f4e6;">Bill360 Seller Portal</span></h1>
     <h2 class="SecondaryHeader" align="center"> <%= session.getAttribute("SupplierName")%> </h2>
 
 
@@ -53,7 +54,7 @@
         $(document).ready(function () {
             $("input").prop("disabled", true);
         });
-        
+
     </script>
     <p>
         <a href="topMenu?time=<%=java.time.Instant.now().getEpochSecond()%>">Menu</a> ><a href="buyerAccounts?time=<%=java.time.Instant.now().getEpochSecond()%>">Buyers Accounts</a> > <%= buyer.getCustomerName()%>
@@ -69,7 +70,7 @@
                     <input class="buyerData" type="text" id="Primary" name="PrimaryPhone" value="<%=buyer.getPhone()%>" required></td>
             </tr>
             <tr style="border-bottom: 2px solid black;"><td  class="buyerData"><label for="Company">Company:</label><input class="buyerData" type="text" id="Company" name="Company" value="<%=buyer.getCustomerName()%>"> </td>
-                
+
             </tr>
 
             <tr style="height: 15px;"></tr>
@@ -96,11 +97,11 @@
                 <td class="buyerData"><label for="BillCountry">BillCountry:</label><input class="buyerData" type="text" id="BillCountry" name="BillCountry" value="US" ></td>
                 <td class="buyerData"><label for="ShipCountry">ShipCountry:</label><input class="buyerData" type="text" id="ShipCountry" name="ShipCountry" value="US" ></td>
             </tr>           
-           
+
             <!--tr style="border-bottom:2px solid black">
                 <td colspan="100%"></td>
             </tr-->
-            
+
         </table>
     </form>
 

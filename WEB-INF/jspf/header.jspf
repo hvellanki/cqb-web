@@ -7,5 +7,6 @@
         <link rel="stylesheet" type="text/css" href="css/cqb.css">        
     </head>
     <body>
+        <div style="text-align:right;"><a href="logout" style="padding: 16px" >logout</a></div>
         <h1 align="center"><span style="background-color: #d5f4e6;">Bill360 Seller Portal</span></h1>
         <h2 class="SecondaryHeader" align="center"> <%= session.getAttribute("SupplierName")%> </h2>

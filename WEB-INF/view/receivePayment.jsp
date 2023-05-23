@@ -20,7 +20,12 @@
                 padding-right: 20px;
                 text-align:left;
             }
+            .btn_submit{
+                background-color: aquamarine;
+                border-radius: 12px;
+            }
         </style>
+        <script src="scripts/jquery-3.6.0.js""></script>
     </head>
     <body style="width: 80%;">
 
@@ -31,12 +36,24 @@
             String HostName = PropsObj.getProperty("B360Host");
         %>
 
+        <script>
+            $(document).ready(function () {
+
+                $("#pmtForm").submit(function (e) {
+                    //disable the submit button
+                    $("#pmtButton").attr("disabled", true);
+                    return true;
+
+                });
+            });
+        </script>
+
         <p>
             <a href="topMenu">Menu</a> ><a href="buyersInvoices">Invoice</a> ><a href="buyerInvoices?BuyerId=<%=buyerObj.getBuyerId()%>&time=<%=java.time.Instant.now().getEpochSecond()%>"><%= buyerObj.getCustomerName()%></a>
             > <a href="invoiceItems?InvoiceId=<%=invoiceObj.getInvoiceId()%>&time=<%=java.time.Instant.now().getEpochSecond()%>">Invoice No.:<%= request.getParameter("InvoiceId")%></a>
         </p>
         <% session.setAttribute("InvoiceId", invoiceObj.getInvoiceId());%>
-        <form method="POST" action="<%=HostName%>/processPayment?InvoiceId=<%=invoiceObj.getInvoiceId()%>"
+        <form method="POST" id="pmtForm" action="<%=HostName%>/processPayment?InvoiceId=<%=invoiceObj.getInvoiceId()%>"
               style="text-align:left; padding-right: 200px; width:60%"> 
             <table>
                 <tr><td>Please enter your Credit Card  information:</td></tr>
@@ -64,13 +81,13 @@
                 <tr ><td ><b>Zip</b> </td><td >
                         <input type="text" name="Zip" value="33601" required></td></tr>
                 <tr ><td ><b>Amount to be charged</b></td><td > 
-                        <input type="text" name="Amount" value="<%=request.getParameter("Amount")%>" required></td></tr>
+                        <input type="text" name="Amount" value="<%=request.getParameter("Balance")%>" required></td></tr>
             </table>
 
             <br><br>
             <tr>
                 <td><button type="button" style="margin-left: 20px" onclick="location.assign('invoiceItems?InvoiceId=<%=invoiceObj.getInvoiceId()%>')">Back</button></td>
-                <td>&nbsp;<input type="submit" value="Submit" onclick="Disabled = true" style="margin-left: 200px"></td>
+                <td>&nbsp;<input button type="button" class="btn_submit" onclick="this.form.submit(); this.disabled = true; this.value = 'Processing…';" id="pmtButton" value="Submit" style="margin-left: 200px"></td>
             </tr>
         </table>
     </form>
